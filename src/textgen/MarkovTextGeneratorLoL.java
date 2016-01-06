@@ -36,8 +36,9 @@ public class MarkovTextGeneratorLoL implements MarkovTextGenerator {
 	{
 		// TODO: Implement this method
 		
-		String[] mywords=sourceText.split("[ .]+");
-		starter=mywords[0];
+		String[] mywords=sourceText.split("[\\s]+");
+		if(starter=="")
+			starter=mywords[0];
 		ArrayList<String> usewords=new ArrayList<String>();
 		for(String str: mywords)
 			usewords.add(str);
@@ -74,12 +75,14 @@ public class MarkovTextGeneratorLoL implements MarkovTextGenerator {
 	public String generateText(int numWords) {
 	    // TODO: Implement this method
 		if(starter=="")
-			return null;
+			return "";
+		if(numWords==0)
+			return "";
 		String currword=starter;
 		String realop="";
 		ArrayList<String> output=new ArrayList<String>();
 		output.add(currword);
-		for(int i=0;i<numWords;i++)
+		for(int i=0;i<numWords-1;i++)
 		{
 			for(ListNode ptr: wordList)
 				
@@ -92,6 +95,7 @@ public class MarkovTextGeneratorLoL implements MarkovTextGenerator {
 				
 			}
 		}
+		
 		for (String s : output)
 		{
 		    realop += s + " ";
@@ -137,6 +141,7 @@ public class MarkovTextGeneratorLoL implements MarkovTextGenerator {
 		String textString = "Hello.  Hello there.  This is a test.  Hello there.  Hello Bob.  Test again.";
 		System.out.println(textString);
 		gen.train(textString);
+		gen.train("");
 		System.out.println(gen);
 		System.out.println(gen.generateText(20));
 		String textString2 = "You say yes, I say no, "+

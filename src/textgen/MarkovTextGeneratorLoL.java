@@ -1,5 +1,6 @@
 package textgen;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -35,30 +36,33 @@ public class MarkovTextGeneratorLoL implements MarkovTextGenerator {
 	{
 		// TODO: Implement this method
 		
-		String[] mywords=sourceText.split("[a-zA-Z]+");
+		String[] mywords=sourceText.split("[ .]+");
 		starter=mywords[0];
+		ArrayList<String> usewords=new ArrayList<String>();
+		for(String str: mywords)
+			usewords.add(str);
+		usewords.add(usewords.get(0));
 		
-	for(int i=1;i<mywords.length;i++)
+	for(int i=1;i<usewords.size();i++)
 	{	boolean found=false;
 		for(ListNode ptr: wordList)
 	
-		{
-			if(ptr.getWord()==mywords[i-1])
+		{	
+			if(		ptr.getWord().equals(usewords.get(i-1)))
 				{	
-					ptr.addNextWord(mywords[i]);
+					ptr.addNextWord(usewords.get(i));
 					found=true;
 					break;
 				}
 			
 		}
 		if(!found)
-		{
-			ListNode newnode=new ListNode(mywords[i-1]);
-			newnode.addNextWord(mywords[i]);
+		{	
+			ListNode newnode=new ListNode(usewords.get(i-1));
+			newnode.addNextWord(usewords.get(i));
 			wordList.add(newnode);
 		}
-		ListNode node=wordList.get(wordList.size()-1);
-		node.addNextWord(mywords[0]);
+		
 	}
 				
 	}

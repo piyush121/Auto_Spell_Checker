@@ -34,7 +34,7 @@ public class MainApp extends Application {
 		
 		this.primaryStage = primaryStage;
 		
-		this.primaryStage.setTitle("TextProApp");
+		this.primaryStage.setTitle("Auto Spell Checking and Suggestions.");
 		
 		try {
 			// Load root layout from fxml

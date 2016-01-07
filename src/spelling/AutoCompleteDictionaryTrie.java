@@ -1,6 +1,7 @@
 package spelling;
 
 import java.util.List;
+import java.util.Queue;
 import java.util.Set;
 import java.util.Collection;
 import java.util.HashMap;
@@ -8,7 +9,7 @@ import java.util.LinkedList;
 
 /** 
  * An trie data structure that implements the Dictionary and the AutoComplete ADT
- * @author You
+ * @author Piyush
  *
  */
 public class AutoCompleteDictionaryTrie implements  Dictionary, AutoComplete {
@@ -67,7 +68,6 @@ public class AutoCompleteDictionaryTrie implements  Dictionary, AutoComplete {
 	{
 	    // TODO: Implement this method
 		TrieNode ptr=root;
-		printNode(ptr);
 		for(int i=0;i<s.length();i++)
 		{
 			if(ptr.getChild(s.toLowerCase().charAt(i))==null)
@@ -103,8 +103,29 @@ public class AutoCompleteDictionaryTrie implements  Dictionary, AutoComplete {
     	 //       If it is a word, add it to the completions list
     	 //       Add all of its child nodes to the back of the queue
     	 // Return the list of completions
+    	 Queue<TrieNode> mylist=new LinkedList<>();
+    	 List<String> completions=new LinkedList<>();
     	 
-         return null;
+    	 TrieNode ptr=root;
+ 		for(int i=0;i<prefix.length();i++)
+ 		{
+ 			if(ptr.getChild(prefix.toLowerCase().charAt(i))==null)
+ 				return completions;
+ 			else
+ 				ptr=ptr.getChild(prefix.toLowerCase().charAt(i));
+ 				
+ 		}
+ 		mylist.add(ptr);
+ 		while(!mylist.isEmpty()&& completions.size()!=numCompletions)
+ 			{
+ 				ptr=mylist.remove();
+	 			if(ptr.endsWord())
+	 				completions.add(ptr.getText());
+	 			for(Character ch: ptr.getValidNextCharacters())
+	 				mylist.add(ptr.getChild(ch));
+ 			
+ 			}
+         return completions;
      }
 
  	// For debugging

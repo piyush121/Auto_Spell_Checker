@@ -145,14 +145,19 @@ public class NearbyWords implements SpellingSuggest {
 		
 		for(int i=0;i<retList.size();i++)
 		{
-		
-		while(!queue.isEmpty() && retList.size()<numSuggestions)
-		{
-			
-					queue.addAll(distanceOne(retList.get(i), true));
+			queue.addAll(distanceOne(retList.get(i), true));
+		while(!queue.isEmpty() && retList.size()<numSuggestions && retList.size()<THRESHOLD)
+		{		
+			//System.out.println(queue.peek());
+				
 				if(!visited.contains(queue.peek()))
 					retList.add(queue.remove());
+				else
+					queue.remove();
 				}
+		if(retList.size()>=numSuggestions)
+			return retList.subList(0, numSuggestions);
+		
 		}
 		
 		
@@ -161,7 +166,7 @@ public class NearbyWords implements SpellingSuggest {
 	}	
 
    public static void main(String[] args) {
-	   /* basic testing code to get started
+	   // basic testing code to get started
 	   String word = "i";
 	   // Pass NearbyWords any Dictionary implementation you prefer
 	   Dictionary d = new DictionaryHashSet();
@@ -171,11 +176,11 @@ public class NearbyWords implements SpellingSuggest {
 	   System.out.println("One away word Strings for for \""+word+"\" are:");
 	   System.out.println(l+"\n");
 
-	   word = "tailo";
+	   word = "theres";
 	   List<String> suggest = w.suggestions(word, 10);
 	   System.out.println("Spelling Suggestions for \""+word+"\" are:");
 	   System.out.println(suggest);
-	   */
+	   
    }
 
 }

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 
 /**
@@ -83,7 +84,7 @@ public class NearbyWords implements SpellingSuggest {
 		for(int i=(int)'a';i<=(int)'z';i++)
 			{
 			StringBuffer str=new StringBuffer(s);
-			str.insert(index, i);
+			str.insert(index, (char)i);
 			if(!currentList.contains(str.toString()) && 
 					(!wordsOnly||dict.isWord(str.toString())) &&
 					!s.equals(str.toString()))
@@ -125,7 +126,7 @@ public class NearbyWords implements SpellingSuggest {
 	public List<String> suggestions(String word, int numSuggestions) {
 
 		// initial variables
-		List<String> queue = new LinkedList<String>();     // String to explore
+		Queue<String> queue = new LinkedList<String>();     // String to explore
 		HashSet<String> visited = new HashSet<String>();   // to avoid exploring the same  
 														   // string multiple times
 		List<String> retList = new LinkedList<String>();   // words to return
@@ -136,6 +137,24 @@ public class NearbyWords implements SpellingSuggest {
 		visited.add(word);
 					
 		// TODO: Implement the remainder of this method, see assignment for algorithm
+		retList=distanceOne(word, true);
+		if(retList.size()>=numSuggestions)
+			return retList.subList(0, numSuggestions);
+		visited.addAll(retList);
+		queue.addAll(retList);
+		
+		for(int i=0;i<retList.size();i++)
+		{
+		
+		while(!queue.isEmpty() && retList.size()<numSuggestions)
+		{
+			
+					queue.addAll(distanceOne(retList.get(i), true));
+				if(!visited.contains(queue.peek()))
+					retList.add(queue.remove());
+				}
+		}
+		
 		
 		return retList;
 

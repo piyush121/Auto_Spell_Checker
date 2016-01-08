@@ -164,8 +164,6 @@ public class NearbyWords implements SpellingSuggest {
 			return retList.subList(0, numSuggestions);
 		
 		
-		
-		
 		return retList;
 
 	}	
@@ -181,7 +179,7 @@ public class NearbyWords implements SpellingSuggest {
 	   System.out.println("One away word Strings for for \""+word+"\" are:");
 	   System.out.println(l+"\n");
 
-	   word = "kangaro";
+	   word = "tailo";
 	   List<String> suggest = w.suggestions(word, 10);
 	   System.out.println("Spelling Suggestions for \""+word+"\" are:");
 	   System.out.println(suggest);

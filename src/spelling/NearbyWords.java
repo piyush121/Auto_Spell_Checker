@@ -143,22 +143,27 @@ public class NearbyWords implements SpellingSuggest {
 		visited.addAll(retList);
 		queue.addAll(retList);
 		
-		for(int i=0;i<retList.size();i++)
-		{
-			queue.addAll(distanceOne(retList.get(i), true));
-		while(!queue.isEmpty() && retList.size()<numSuggestions && retList.size()<THRESHOLD)
+		
+		queue.add(word);
+		while(!queue.isEmpty() && retList.size()<numSuggestions && queue.size() < THRESHOLD)
 		{		
 			//System.out.println(queue.peek());
+				List<String> neighbour =distanceOne(queue.remove(), false);
+				for(String str : neighbour)
+				if(!visited.contains(str))
+					{
+					visited.add(str);
+					queue.add(str);
+						if(dict.isWord(str))
+							retList.add(str);
+					
+					}
 				
-				if(!visited.contains(queue.peek()))
-					retList.add(queue.remove());
-				else
-					queue.remove();
-				}
+		}
 		if(retList.size()>=numSuggestions)
 			return retList.subList(0, numSuggestions);
 		
-		}
+		
 		
 		
 		return retList;
@@ -176,7 +181,7 @@ public class NearbyWords implements SpellingSuggest {
 	   System.out.println("One away word Strings for for \""+word+"\" are:");
 	   System.out.println(l+"\n");
 
-	   word = "theres";
+	   word = "kangaro";
 	   List<String> suggest = w.suggestions(word, 10);
 	   System.out.println("Spelling Suggestions for \""+word+"\" are:");
 	   System.out.println(suggest);

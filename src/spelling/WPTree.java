@@ -45,24 +45,38 @@ public class WPTree implements WordPath {
 	{
 	    // TODO: Implement this method.
 		Queue<WPTreeNode> queue=new LinkedList<WPTreeNode>();
+		HashSet<String> visited=new HashSet<>();
 		WPTreeNode mynode=new WPTreeNode(word1, null);
 		this.root=mynode;
 		queue.add(mynode);
-		while(!queue.isEmpty() && queue.size()<10000 )
-		{
-			if(queue.peek().getWord()==word2)
-				return queue.remove().buildPathToRoot();
+		visited.add(mynode.getWord());
+		
+		while(!queue.isEmpty() )
+		{			
+			
 			for(String str : nw.distanceOne(queue.peek().getWord(), true))
-				queue.peek().addChild(str);
+				{
+					if(!visited.contains(str))
+						{
+							visited.add(str);	
+							queue.peek().addChild(str);
+							if(str.equals(word2))
+							{
+								WPTreeNode dest=new WPTreeNode(word2, queue.peek());
+								return dest.buildPathToRoot();
+							}
+						}
+				}
 			queue.addAll(queue.remove().getChildren());
 			
+			
 		}
-		
+		System.out.println("Didn't Find");
 	    return new LinkedList<String>();
 	}
 	
 	// Method to print a list of WPTreeNodes (useful for debugging)
-	private String printQueue(List<WPTreeNode> list) {
+	private String printQueue(Queue<WPTreeNode> list) {
 		String ret = "[ ";
 		
 		for (WPTreeNode w : list) {
@@ -74,7 +88,7 @@ public class WPTree implements WordPath {
 	public static void main(String[] args)
 	{
 		WPTree tree=new WPTree();
-		System.out.println(tree.findPath("time", "theme"));
+		System.out.println(tree.findPath("time", "tailor"));
 	}
 }
 

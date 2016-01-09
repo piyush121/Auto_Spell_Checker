@@ -88,7 +88,7 @@ public class WPTree implements WordPath {
 	public static void main(String[] args)
 	{
 		WPTree tree=new WPTree();
-		System.out.println(tree.findPath("time", "tailor"));
+		System.out.println(tree.findPath("these", "tailor"));
 	}
 }
 

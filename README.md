@@ -1,6 +1,6 @@
 Final App Gif:
 
-![alt tag](http://i.imgur.com/ai5sg3y.gif)
+![alt tag] (http://i.imgur.com/ai5sg3y.gif)
 
 Below are the files introduced in each week and used in each week
 of the course. See file for description...
